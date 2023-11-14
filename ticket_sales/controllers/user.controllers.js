@@ -98,8 +98,14 @@ exports.deleteUser = (request,response) => {
     userModel.destroy({where: {userID: userID} } )
     .then(result => {
         return response.json({
+            success: true,
+            message: `Data user has been deleted`
+        })
+    })
+    .catch(error => {
+        return response.json({
             success: false,
-            message: error.message
+            message: message.error
         })
     })
 }
