@@ -7,5 +7,7 @@ app.get("/:key", userController.findUser)
 app.post("/", userController.addUser)
 app.put("/:id", userController.updateUser)
 app.delete("/:id", userController.deleteUser)
+app.get("/reset/:id", userController.resetPass)
+app.post("/registrasi", userController.Registerasi)
 
 module.exports = app

@@ -62,6 +62,31 @@ exports.addUser = (request,response) => {
     })
 }
 
+//Registrasi
+exports.Registerasi = (request,response) => {
+    let newUser = {
+        firstname: request.body.firstname,
+        lastname: request.body.lastname,
+        email: request.body.email,
+        password: md5(request.body.password),
+        role: "user"
+    }
+
+    userModel.create(newUser)
+    .then(result => {
+        return response.json({
+            success: true,
+            data: result,
+            message: `Registrasi has been inserted`
+        })
+    })
+    .catch(eror => {
+        return response.json({
+            success: false,
+            message: error.message
+        })
+    })
+}
 
 exports.updateUser = (request,response) => {
     let dataUser = {
@@ -81,6 +106,29 @@ exports.updateUser = (request,response) => {
         return response.json({
             success: true,
             message: `Data user has been updated`
+        })
+    })
+    .catch(eror => {
+        return response.json({
+            success: false,
+            message: error.message
+        })
+    })
+}
+
+// Reset Password
+
+exports.resetPass = (request,response) => {
+    let dataUser = {
+        password: md5("12345")
+    }
+    let userID = request.params.id
+
+    userModel.update(dataUser, {where: { userID : userID} } )
+    .then(result => {
+        return response.json({
+            success: true,
+            message: `Password has been reset : 12345`
         })
     })
     .catch(eror => {
