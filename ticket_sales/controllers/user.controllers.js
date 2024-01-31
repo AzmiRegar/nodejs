@@ -63,30 +63,49 @@ exports.addUser = (request,response) => {
 }
 
 //Registrasi
-exports.Registerasi = (request,response) => {
-    let newUser = {
-        firstname: request.body.firstname,
-        lastname: request.body.lastname,
-        email: request.body.email,
-        password: md5(request.body.password),
-        role: "user"
-    }
+exports.Registerasi = (request, response) => {
+    // Check if the email alaready exists
+    userModel.findOne({ where:{email: request.body.email} })
+        .then(existingUser => {
+            if (existingUser) {
+                return response.status(400).json({
+                    success: false,
+                    message: 'Email is already registered'
+                });
+            } else {
+                // If email is not registered, proceed with registration
+                let newUser = {
+                    firstname: request.body.firstname,
+                    lastname: request.body.lastname,
+                    email: request.body.email,
+                    password: md5(request.body.password),
+                    role: "user"
+                };
 
-    userModel.create(newUser)
-    .then(result => {
-        return response.json({
-            success: true,
-            data: result,
-            message: `Registrasi has been inserted`
+                userModel.create(newUser)
+                    .then(result => {
+                        return response.json({
+                            success: true,
+                            data: result,
+                            message: `Registration has been inserted`
+                        });
+                    })
+                    .catch(error => {
+                        return response.status(500).json({
+                            success: false,
+                            message: error.message
+                        });
+                    });
+            }
         })
-    })
-    .catch(eror => {
-        return response.json({
-            success: false,
-            message: error.message
-        })
-    })
-}
+        .catch(error => {
+            return response.status(500).json({
+                success: false,
+                message: error.message
+            });
+        });
+        
+};
 
 exports.updateUser = (request,response) => {
     let dataUser = {
