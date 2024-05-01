@@ -4,7 +4,7 @@ const seatModel = require(`../models/index`).seat
 const Op = require(`sequelize`).Op
 
 exports.getAllSeat = async (request,response) => {
-    let seats = await seatModelModel.findAll()
+    let seats = await seatModel .findAll()
     return response.json({
         success: true,
         data: seats,
@@ -31,15 +31,12 @@ exports.findSeat = async (request, response) => {
 }
 
 exports.addSeat = (request,response) => {
-    upload(request, response, async error => {
-        if (error) {
-            return response.json({ message: error})
-        }
 
         let newSeat = {
             rowNum: request.body.rowNum,
             seatNum: request.body.seatNum,
-            status: request.body.status
+            status: request.body.status,
+            eventID: request.body.eventID
         }
 
         seatModel.create(newSeat)
@@ -56,5 +53,50 @@ exports.addSeat = (request,response) => {
                 message: error.message
             })
         })
-    })
+}
+exports.updateSeat = (request, response) => {
+    let dataSeat = {
+        eventID: request.body.eventID,
+        rowNum: request.body.rowNum,
+        seatNum: request.body.seatNum,
+        status: request.body.status
+    }
+
+    let seatID = request.params.id
+
+    seatModel.update(dataSeat, { where: { seatID: seatID } })
+        .then(result => {
+            return response.json({
+                success: true,
+                message: `Seat has been updated`
+            })
+        })
+        .catch(eror => {
+            return response.json({
+                success: false,
+                message: error.message
+            })
+        })
+}
+
+exports.deleteSeat = (request, response) => {
+    let seatID = request.params.id
+
+    seatModel.destroy({
+            where: {
+                seatID: seatID
+            }
+        })
+        .then(result => {
+            return response.json({
+                success: true,
+                message: `Event has been deleted`
+            })
+        })
+        .catch(error => {
+            return response.json({
+                success: false,
+                message: message.error
+            })
+        })
 }

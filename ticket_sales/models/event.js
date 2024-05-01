@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
     eventName: DataTypes.STRING,
     eventDate: DataTypes.DATE,
     venue: DataTypes.STRING,
-    rice: DataTypes.INTEGER,
+    price: DataTypes.INTEGER,
     image: DataTypes.STRING
   }, {
     sequelize,

@@ -18,7 +18,7 @@ module.exports = {
       venue: {
         type: Sequelize.STRING
       },
-      rice: {
+      price: {
         type: Sequelize.INTEGER
       },
       image: {

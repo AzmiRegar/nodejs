@@ -48,7 +48,7 @@ exports.addEvent = (request,response) => {
             eventName: request.body.eventName,
             eventDate: request.body.eventDate,
             venue: request.body.venue,
-            rice: request.body.rice,
+            price: request.body.price,
             image: request.file.filename
         }
 
@@ -81,7 +81,7 @@ exports.updateEvent = async (request,response) => {
             eventName: request.body.eventName,
             eventDate: request.body.eventDate,
             venue: request.body.venue,
-            rice: request.body.rice
+            price: request.body.price
         }
 
         if (request.file) {

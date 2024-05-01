@@ -139,7 +139,7 @@ exports.updateUser = (request,response) => {
 
 exports.resetPass = (request,response) => {
     let dataUser = {
-        password: md5("12345")
+        password: md5("moklet")
     }
     let userID = request.params.id
 
@@ -147,7 +147,7 @@ exports.resetPass = (request,response) => {
     .then(result => {
         return response.json({
             success: true,
-            message: `Password has been reset : 12345`
+            message: `Password has been reset : moklet`
         })
     })
     .catch(eror => {
